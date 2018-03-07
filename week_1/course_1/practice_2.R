@@ -3,10 +3,10 @@
 
 
 # Create a vector called course.students.number, with data: c(1, 30)
-course.student.number <- 
+course.student.number <- c(1,30)
 
 # Create a variable csn, with data: length of course.student.number
-csn <- 
+csn <- length(course.student.number)
 
 # Create a vector course.student.grade, with sample() function: x = c(55:100), size = csn
 course.student.grade <- 
