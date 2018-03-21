@@ -12,7 +12,7 @@ url <- "https://www.ptt.cc/bbs/NBA/index5720.html"
 res <- read_html(url)
 
 # Parse the content and extract the titles
-raw.titles <- res %>% html_nodes("div.title")
+raw.titles <- res %>% html_nodes(".title")
 
 # Extract link
 nba.article.link <- raw.titles %>% html_node("a") %>% html_attr('href')
@@ -33,4 +33,5 @@ rm(list = ls())
 library(jsonlite)
 url <- "https://www.dcard.tw/_api/posts?popular=true"
 res <- fromJSON(url)
+res
 

@@ -53,6 +53,7 @@ for (num in nums) {
 }
 
 
+
 for(x in c(1:10)){
   if(nums[x]>50 && nums[x]%%2==0){
     result1 <-paste("偶數且大於50",":",nums[x])
@@ -63,25 +64,6 @@ for(x in c(1:10)){
     break
   }
 }
-
-
-
-
-repeat{
-  x<-sample(nums,10,replace = FALSE, prob = NULL)
-      print(x)
-    C <- x>50 &&x%%2==0
-    D <- x ==66
-  if(C){    
-    print("偶數且大於50")
-    }
-  if(D){    
-    break
-    print("太66666666666了")
-  }
-}
-
-
 
 
 #repeat{
@@ -114,20 +96,44 @@ x<-1601
 # 3. 一旦猜對，系統可自動計算玩家猜測的次數
 
 #先產生一組電腦的答案
-answer<-sample(0:9,4,replace = FALSE,prob = NULL)
-#玩家輸入一組數字
-input<-
-#最外圍要用repeat函數
-repeat{
-  scan(input,nmax=4)
-  #用for loop、[]去檢查玩家的數字
-  
-  #如果數字跟位置都一樣，顯示為A
-  #如果有這個數字，但位置不對，顯示為B
-  #如果兩組答案一致（猜對），就break
-  
-}
-  
+  answer<-sample(0:9,4,replace = FALSE,prob = NULL)
+  #玩家輸入一組數字
+  input.count <-0
+  #最外圍要用repeat函數
+  repeat{
+    print("請輸入由0-9不重複組成的四碼數字～～～～")
+    input<- scan(nmax = 4)      #what="numeric",
+    A <-0
+    B <-0
+    
+    if(!any(duplicated(input))){
+      input.count<-input.count+1
+      #用for loop、[]去檢查玩家的數字
+      for(i in 1:4){
+        if(input[i]==answer[i]){
+          A <-A+1  #如果數字跟位置都一樣，顯示為A
+        }
+        else 
+          for(j in 1:4){
+            if(input[i]==answer[j])  #如果有這個數字，但位置不對，顯示為B
+              B <-B+1
+          }  
+      }
+    }
+    cat("第",input.count,"次猜數字的結果：",A,"A",B,"B")
+    
+    if(all(input == answer)){
+      cat("恭喜你～～～你第",input.count,"次的猜數字結果是對der")
+      break
+    }
+    else
+    {
+      cat("再接再厲～\n")  #加上\n可以幫助我們斷行，不然下一次執行結果會接連出現沒有在下一行    
+    }
+    
+    #如果兩組答案一致（猜對），就break
+  }
+
 
 
 
