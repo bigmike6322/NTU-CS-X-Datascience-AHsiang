@@ -1,0 +1,46 @@
+#cat_food_crawler
+
+ auther | date |    output
+--------|------|--------------
+ AHsaing| 03/22| html_document
+
+output:
+    html_document:
+    toc:true
+    toc_depth:2
+    toc_float:  
+        collapsed:false
+        smooth_scroll:false
+***
+#cat_food_crawler_code
+```{r RCrawler}
+library(jsonlite)
+
+url<-"http://ecshweb.pchome.com.tw/search/v3.3/all/results?q=%E7%9A%87%E5%AE%B6%E8%B2%93%E9%A3%BC%E6%96%99&page=1&sort=rnk/dc"
+cat_food <- fromJSON(url)
+page_nums <-1:cat_food$totalPage
+
+cat_url<-paste("http://ecshweb.pchome.com.tw/search/v3.3/all/results?q=%E7%9A%87%E5%AE%B6%E8%B2%93%E9%A3%BC%E6%96%99&page=",page_nums,"&sort=rnk/dc",sep="")
+cat_product_names <-c()
+cat_product_descriptions <-c()
+cat_product_prices <-c()
+cat_product_ids <-c()
+
+for(i in 1:10){
+  single_page_url <- fromJSON(cat_url[i])
+  cat_product_names <- c(cat_product_names,single_page_url$prods$name)
+  cat_product_descriptions <- c(cat_product_descriptions,single_page_url$prods$describe)
+  cat_product_prices <- c(cat_product_prices,single_page_url$prods$originPrice)
+  cat_product_ids <- c(cat_product_ids,single_page_url$prods$Id)
+  Sys.sleep(sample(2:5,size=1))  #加這行是為了避免過於密集訪問，造成該網站伺服器負擔而被封鎖
+}
+
+cat_food_dataframe <- data.frame(cat_product_names,cat_product_descriptions,cat_product_prices,cat_product_ids)
+cat_food_123456 <- head(cat_food_dataframe)
+```
+***
+#Result
+```{r Table}
+library(knitr)
+kable(cat_food_123456)
+```
